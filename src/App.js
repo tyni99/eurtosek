@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import axios from 'axios';
+
+
+const URL = "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_GcBJTLHxXV00DAkVh50lh0CIKAGUzinys2SDyFZZ"
 
 function App() {
+  const [eur,setEur] = useState(0)
+  const [sek,setSek] = useState(0)
+  const [rate,setRate] = useState(0)
+  
+  const convert = (e) => {
+    e.preventDefault()
+    axios.get(URL)
+    .then((response)=>{
+      const json=response.data
+      setRate(json.data.SEK)
+      setSek(eur * json.data.SEK)
+    }).catch (error =>{
+      alert(error)
+    })
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="container">
+      <h3>VALUUTTALASKURI</h3>
+      <form onSubmit={convert}>
+        <div id="euro">
+          <label>Eur</label>&nbsp;
+          <input type="number" step="0.01"
+          value={eur} onChange={e => setEur(e.target.value)} />
+          <output>{rate}</output>
+        </div>
+        <div id="sek">
+          <label>Sek</label>
+          <output>{sek.toFixed(2)} SEK</output>
+        </div>
+        <div>
+          <button>Calculate</button>
+        </div>
+      </form>
     </div>
   );
 }
