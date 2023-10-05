@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 
 
-const URL = "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_GcBJTLHxXV00DAkVh50lh0CIKAGUzinys2SDyFZZ"
+const URL = "https://api.freecurrencyapi.com/v1/latest?apikeyHERE"
 
 function App() {
   const [eur,setEur] = useState(0)
